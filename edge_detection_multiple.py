@@ -17,7 +17,7 @@ for root, dirs, files in os.walk("./images"):
         # plt.title('Original Image'), plt.xticks([]), plt.yticks([])
         # plt.imshow(edges, cmap='gray')
 
-        destination_path = "G:/Programming/Python/Edge Detection/images/edges/"
+        destination_path = "G:/Programming/Python/Edge Detection/images/edges-and-contours/"
         cv2.imwrite(os.path.join(destination_path, filename), edges)
         # plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
         # plt.show()

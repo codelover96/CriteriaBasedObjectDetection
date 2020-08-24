@@ -5,10 +5,10 @@ import os
 
 # read image
 filepath = "G:/Programming/Python/Edge Detection/"
-filename = "L1C_T34SGJ_A017522_20200714T091738.tif"
+filename = "00a3ab3cc.jpg"
 img = cv2.imread(filepath+filename, 0)
 # Find edge with Canny edge detection
-edges = cv2.Canny(img, 50, 150)
+edges = cv2.Canny(img, 150, 200)
 
 # display results
 plt.subplot(121), plt.imshow(img, cmap='gray')

@@ -1,9 +1,12 @@
 from sklearn.cluster import KMeans
 import gdal
 import numpy as np
+import time
 
 # read in image to classify with gdal
-naip_fn = 'L1C_T34SFH_A017565_20200717T092648.tif'
+filename = ''
+file_extension = '.tif'
+naip_fn = filename + file_extension
 driverTiff = gdal.GetDriverByName('GTiff')
 naip_ds = gdal.Open(naip_fn)
 nbands = naip_ds.RasterCount
@@ -15,8 +18,9 @@ for i in range(1, nbands+1):
     band = naip_ds.GetRasterBand(i).ReadAsArray()
     data[:, i-1] = band.flatten()
 
-# set up the kmeans classification, fit, and predict
-km = KMeans(n_clusters=7)
+# set up the k-means classification, fit, and predict
+kmeansclusters = 11
+km = KMeans(kmeansclusters)
 km.fit(data)
 km.predict(data)
 
@@ -24,7 +28,8 @@ km.predict(data)
 out_dat = km.labels_.reshape((naip_ds.RasterYSize, naip_ds.RasterXSize))
 
 # save the original image with gdal
-clfds = driverTiff.Create('classified.tif', naip_ds.RasterXSize, naip_ds.RasterYSize, 1, gdal.GDT_Float32)
+# clfds = driverTiff.Create('/classified/'+naip_fn+'-classified'+str(kmeansclusters)+time.asctime()+'.tif', naip_ds.RasterXSize, naip_ds.RasterYSize, 1, gdal.GDT_Float32)
+clfds = driverTiff.Create(filename+'-'+str(kmeansclusters)+'clusters'+'.tif', naip_ds.RasterXSize, naip_ds.RasterYSize, 1, gdal.GDT_Float32)
 clfds.SetGeoTransform(naip_ds.GetGeoTransform())
 clfds.SetProjection(naip_ds.GetProjection())
 clfds.GetRasterBand(1).SetNoDataValue(-9999.0)
