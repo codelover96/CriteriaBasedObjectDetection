@@ -4,3 +4,6 @@ Edge_detection.ipynb
 *.jpg
 *.png
 *.jp2
+rle-to-boxes-concurrent.py
+mask-r-cnn-ship-detection-minimum-viable-model-1.ipynb
+airbus-ship-detection.lnk
